@@ -44,7 +44,7 @@ $(window).load(function(){
 		//'height': sh
 		//}//);
 	//REMOVE THIS--
-	//Setting icon-tools width to be same as video's 
+	//Setting icon-tools width to be same as video's
 	$('#icons-tools').css({
 		'width': height
 	});
@@ -57,7 +57,7 @@ $(window).load(function(){
 	globalClose = function(){
 		socket.emit('remote-disconnected');
 		$('body').html('<div id="left-notification">You have successfully left the group</div>');
-		localStream.stop();
+		//localStream.stop(); // (damien) Useless ..
 		if(remoteStream!=undefined)
 		{
 			remoteStream.stop();
@@ -65,15 +65,15 @@ $(window).load(function(){
 		localPeerConnection=null;
 		remotePeerConnection=null;
 	};
-	$(document).on('click','#icons-tools div:eq(5)',function(e){
+	$(document).on('click','#icons-tools div:eq(4)',function(e){
 		console.log('Inside number 5 clicked !!');
 		$(document).one('click','.main-expand-icon-active',exitFullscreen);
 		$(document).one('keyup', function(e) {
-		    if (e.keyCode == 27) { 
+		    if (e.keyCode == 27) {
 		      	ESC_BUTTON_PRESSED = true;
 		      	ESC_COUNT++;
 		      	toggleFunction("fullscreen", $('#icons-tools div:eq(5)'),"main-expand-icon","main-expand-icon-active");
-		    } 
+		    }
 		});
 		toggleFunction("fullscreen", $(this),"main-expand-icon","main-expand-icon-active");
 		if (globalVideo.requestFullscreen) {
@@ -84,7 +84,7 @@ $(window).load(function(){
 		  globalVideo.mozRequestFullScreen();
 		} else if (globalVideo.webkitRequestFullscreen) {
 		  globalVideo.webkitRequestFullscreen();
-		}	
+		}
 	});
 	//FULL SCREEN MODE ENDS
 	//REMOTE VIDEO STOP
@@ -102,7 +102,7 @@ $(window).load(function(){
 	});
 	//REMOTE AUDIO STOP ENDS
 	//4th Button is clicked
-	$(document).on('click','#icons-tools div:eq(4)',function(e){
+	$(document).on('click','#icons-tools div:eq(3)',function(e){
 		toggleFunction("phone", $(this),"main-phone-drop-icon",".main-phone-drop-icon-active");
 		console.log('drop call clicked!!');
 		globalClose();
@@ -143,9 +143,9 @@ $(window).load(function(){
 			sdpMLineIndex: candidate.sdpMLineIndex,
 			candidate: candidate.candidate
 		}));
-	
+
 	});
-		
+
 	socket.on('remote-candidate-broadcast',function(candidate){
 		console.log('Inside remote-candidate-broadcast');
 		localPeerConnection.addIceCandidate(new RTCIceCandidate({
@@ -305,11 +305,11 @@ $(window).load(function(){
    				 {
    				 	userPrompt.find('#errors').removeClass().addClass('wrong').text('No special characters !');
    				 }
-				
+
 			}
 		});
 	}
-		
+
 });
 
 function addRemoteVideo(top, height, stream)
@@ -341,7 +341,7 @@ function addRemoteVideo(top, height, stream)
 		console.log('NOW SHOWING OTHER PERSONS SCREEN AS HE HAS SHARED IT');
 		globalVideo = $('#my-screen-share')[0];
 		window.abc = stream;
-        $('#my-screen-share').hide()[0].src = stream;								         
+        $('#my-screen-share').hide()[0].src = stream;
 	        	$('#local-video video').hide();
 	        	$('#screen-share').css({'height': screenSharedHeight});
 	        	$('#my-screen-share').css({'position': 'relative','height': 'auto', 'width': main_width, 'left': 0, 'z-index': 0, 'top': 0}).parent().css({'position': 'absolute', 'top': 660 - screenSharedHeight }).prependTo('#local-video');
@@ -364,12 +364,12 @@ function removeRemoteVideo()
 		$('#local-video').find('video').remove();
 		$('#local-video').prepend($('#remote-video').find('video').eq(0).removeClass('remote-video-right').css({'position': 'absolute','height': 'auto', 'width': main_width, 'left': 0}));
 		$('#remote-video').find('video').remove();
-		$('#local-video').find('video')[0].play();	
+		$('#local-video').find('video')[0].play();
 		globalVideo = $('#local-video').find('video')[0];
 		globalStream = localStream;
 		console.log('FUNCTION ENDED !!!!');
 		REMOTE_VIDEO_ON = false;
-		disableTextarea();		
+		disableTextarea();
 	}
 	else
 	{
@@ -385,7 +385,7 @@ function removeRemoteVideo()
 		//NOW doing the first if condition things...
 		$('#local-video').prepend($('#remote-video').find('video').eq(0).removeClass('remote-video-right').css({'position': 'absolute','height': 'auto', 'width': main_width, 'left': 0}));
 		$('#remote-video').find('video').remove();
-		$('#local-video').find('video')[0].play();	
+		$('#local-video').find('video')[0].play();
 		//ENDS--
 		setTimeout(function(){
 			socket.screenStream.stop();
@@ -403,11 +403,11 @@ function removeRemoteVideo()
 		var isChrome = !!navigator.webkitGetUserMedia;
 
 		var STUN = {
-		    url: isChrome 
-		       ? 'stun:stun.l.google.com:19302' 
+		    url: isChrome
+		       ? 'stun:stun.l.google.com:19302'
 		       : 'stun:23.21.150.121'
 		};
-		
+
 		var iceServers = {
 		   iceServers: [STUN]
 		};
@@ -415,7 +415,7 @@ function removeRemoteVideo()
 	  localPeerConnection.onicecandidate = gotLocalIceCandidate;
 	  localPeerConnection.onaddstream = gotLocalVideo;
 	  localPeerConnection.addStream(localStream);
-	  localPeerConnection.createOffer(gotLocalDescription,handleError);	
+	  localPeerConnection.createOffer(gotLocalDescription,handleError);
 	  if(socket.screenSharedByRemote)
 		 {
 			socket.localScreenPeerConnection = localPeerConnection;
@@ -469,8 +469,8 @@ function removeRemoteVideo()
 		var isChrome = !!navigator.webkitGetUserMedia;
 
 		var STUN = {
-		    url: isChrome 
-		       ? 'stun:stun.l.google.com:19302' 
+		    url: isChrome
+		       ? 'stun:stun.l.google.com:19302'
 		       : 'stun:23.21.150.121'
 		};
 
@@ -487,7 +487,7 @@ function removeRemoteVideo()
 	  remotePeerConnection.onicecandidate = gotRemoteIceCandidate;
 	  remotePeerConnection.onaddstream = gotRemoteVideo;
 	  remotePeerConnection.setRemoteDescription(new RTCSessionDescription(sdp));
-	  remotePeerConnection.createAnswer(gotRemoteDescription,handleError);	
+	  remotePeerConnection.createAnswer(gotRemoteDescription,handleError);
 	  	if(socket.screenSharedByRemote)
 		 {
 			socket.remoteScreenPeerConnection = remotePeerConnection;
@@ -499,7 +499,7 @@ function removeRemoteVideo()
 	  remotePeerConnection.setLocalDescription(sdp);
 	  socket.emit('got-remote-description', sdp);
 	}
-	
+
 	function  gotRemoteIceCandidate(event)
 	{
 		console.log('Got Remote Ice Candidate!!!');
@@ -508,7 +508,7 @@ function removeRemoteVideo()
 		console.log(event.candidate);
 		socket.emit('remote-candidate',event.candidate);
 		}
-		
+
 	}
 	function gotRemoteVideo(stream)
 	{
@@ -568,7 +568,7 @@ function resetChatBuffer()
 	}
 
 function toggleFunction(name, elem,first,second)
-	{	
+	{
 			if(toolsIcons[name])
 			{
 		        elem.removeClass();
@@ -591,11 +591,11 @@ function setToolbar()
 			'position': 'relative',
 			'top': icontop,
 			'width': 'initial'
-		});		
+		});
 }
 
 function changeToolbar()
-{	
+{
 	var mw = window.innerHeight - 74;
 	var cv;
 	var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement;
@@ -611,7 +611,7 @@ function changeToolbar()
 				cv = window.innerHeight - 74;
 				$('#toolbar').css({'position':'absolute','top': cv, 'width': window.innerWidth}).find('div#icons-tools').width(700).parent().fadeIn(100);
 			}, 200);
-			
+
 		}
 		else
 		{
@@ -621,7 +621,7 @@ function changeToolbar()
 				'position': 'relative',
 				'top': icontop,
 				'width': 'initial'
-			}).find('div#icons-tools').width(fff);	
+			}).find('div#icons-tools').width(fff);
 			FULL_SCREEN_BUTTON_CLICKED =false;
 			ESCAPE_BUTTON_PRESSED = false;
 		}
@@ -637,7 +637,7 @@ function changeToolbar()
 				cv = window.innerHeight - 74;
 				$('#toolbar').children('#icons-tools').eq(1).hide();
 				$('#toolbar').css({'position':'absolute','top': cv,'width': window.innerWidth}).find('div#icons-tools').width(700).parent().fadeIn(100);
-			}, 200);	
+			}, 200);
 			ESC_BUTTON_PRESSED = false;
 		}
 
@@ -655,7 +655,7 @@ function exitFullscreen() {
 	  } else if(document.webkitExitFullscreen) {
 	    document.webkitExitFullscreen();
 	  }
-	
+
 }
 
 function enableTextarea()
@@ -673,7 +673,7 @@ function disableTextarea()
 }
 //CHAT FUNCTIONALITY ---ENDS
 
-//CHECKING IF SCREEN 
+//CHECKING IF SCREEN
 
 function resetScreenShareByRemote()
 {
