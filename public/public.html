@@ -17,6 +17,22 @@
 	<script src="scripts/chat-solo.js"></script>
 	<script type="text/javascript" src="scripts/countdown-logic.js"></script>
 	<script type="text/javascript" src="scripts/slider-easing.js"></script>
+	<script src="hnl.mobileConsole.js"></script>
+	<script>
+			if (!mobileConsole.status.initialized) {
+					mobileConsole.init();
+			}
+			function traceThis() {
+					var variable = 'string';
+					function bar() {
+							console.trace();
+					}
+					function foo() {
+							bar(variable);
+					}
+					foo();
+			}
+	</script>
 </head>
 <body>
 	<div id="main-background">
@@ -65,7 +81,7 @@
 		<img src="images/buttons/RESIZE/resize-normal.png" />
 		<img src="images/buttons/RESIZE/resize-hover.png" />
 		<img src="images/buttons/RESIZE/resize-active.png" />
-	
+
 		<img src="images/buttons/CAM/cam-normal.png" />
 		<img src="images/buttons/CAM/cam-hover.png" />
 		<img src="images/buttons/CAM/cam-active.png" />
@@ -78,43 +94,6 @@
 			</div>
 		</div>
 	</div>
-			<!-- Right Container Starts !!!!!-->
-	<div id="sidebar-right">
-		<div id="first-section">
-			<div id="first-right-icons">
-				<img src="images/buttons/1.png">
-				<img src="images/buttons/2.png">
-				<img src="images/buttons/3.png">
-				<img src="images/buttons/4.png">
-			</div>
-			<div id="first-names">
-				<div id="first-speaker">
-				</div>
-				<div id="second-speaker">
-				</div>
-			</div>
-		</div>
-		<div id="second-section">
-		</div>
-		<div id="third-section">
-			<form id="second-section-form">
-				<textarea disabled rows="7" style="width: 100%; text-align: left" id="first-chat" autocomplete="off" placeholder="Waiting for the other user."></textarea>
-				<input type="submit" style="display: none">
-			</form>
-		</div>
-		<div id="fourth-section">
-				<div id="first-attach">
-					<input style="display: none" id="fileupload" type="file" name="files[]" multiple>
-				</div>
-				<img src="images/buttons/plus.png" id="first-plus">
-				<img src="images/buttons/send.png" id="first-plane">
-		</div>
-	</div>
-	<div id="sidebar-chat-right">
-		<div id="local-chat-arrow">
-		</div>
-	</div>
-		<!-- Right Container ENds... !!!!!-->
 	<div id="screen-share">
 		<video id="my-screen-share" autoplay></video>
 	</div>
