@@ -8,9 +8,9 @@ $(document).ready(function(){
 
 function showBlackOverlay()
 {
-	$('#black-overlay #cubes').show();
-	$('#black-overlay').removeClass();
-	$('#black-overlay').show();
+	//$('#black-overlay #cubes').show();
+	//$('#black-overlay').removeClass();
+	//$('#black-overlay').show();
 }
 
 function removeBlackOverlay()
@@ -79,7 +79,7 @@ function removeImage()
 		$('#black-overlay').find('#image-container').remove();
 		removeBlackOverlay();
 	},300);
-	
+
 }
 
 function showVideo(data)
@@ -135,5 +135,5 @@ function removeVideo()
 		$('#black-overlay').find('#image-container').remove();
 		removeBlackOverlay();
 	},300);
-	
+
 }
