@@ -332,7 +332,7 @@ function addRemoteVideo(top, height, stream)
 		setTimeout(function(){
 			removeBlackOverlay();
 			enableTextarea();
-			$('#remote-video').find('video').eq(0).show().addClass('animated fadeInLeft');
+			$('#remote-video').find('video').eq(0).show();//.addClass('animated fadeInLeft');
 		},2000);
 	}
 	else if(socket.screenSharedByRemote)
@@ -660,15 +660,15 @@ function exitFullscreen() {
 
 function enableTextarea()
 {
-		$('#second-section-form textarea')[0].placeholder = "Enter text to chat"
-		$('#second-section-form textarea')[0].disabled = false;
+		//$('#second-section-form textarea')[0].placeholder = "Enter text to chat"
+		//$('#second-section-form textarea')[0].disabled = false;
 		$('#fileupload').css('display','block');
 }
 
 function disableTextarea()
 {
-		$('#second-section-form textarea')[0].placeholder = "Waiting for the other user"
-		$('#second-section-form textarea')[0].disabled = true;
+		//$('#second-section-form textarea')[0].placeholder = "Waiting for the other user"
+		//$('#second-section-form textarea')[0].disabled = true;
 		$('#fileupload').css('display','none');
 }
 //CHAT FUNCTIONALITY ---ENDS

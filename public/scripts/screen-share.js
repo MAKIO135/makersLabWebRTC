@@ -28,12 +28,12 @@ $(window).load(function(){
 				  //           screen_constraints.video.mandatory.chromeMediaSourceId = sourceId;
 				  //       }
 				  //   }
-				    
+
 			   //  			try
 			   //  			{
 						// 		    getUserMedia(screen_constraints, function (stream) {
 						// 		    	globalVideo = $('#my-screen-share')[0];
-						// 		        $('#my-screen-share').hide()[0].src = URL.createObjectURL(stream);								         
+						// 		        $('#my-screen-share').hide()[0].src = URL.createObjectURL(stream);
 						// 			        	//Person must be alone..
 						// 			        	window.abc = stream;
 						// 			        	$('#my-video').hide();
@@ -55,7 +55,7 @@ $(window).load(function(){
 						// 				        		socket.screenShared = false;
 						// 				        		socket.emit('screen-share-off');
 						// 	        				}
-									        
+
 						// 		    }, function (error) {
 						// 		        console.error(error);
 						// 		    });
@@ -65,7 +65,7 @@ $(window).load(function(){
 						// 	  {
 						// 	  		console.log('ERROR is '+err);
 						// 	  }
-				   	
+
 						// });
 
 			}
@@ -95,13 +95,13 @@ $(window).load(function(){
 				            screen_constraints.video.mandatory.chromeMediaSourceId = sourceId;
 				        }
 				    }
-				    
+
 			    			try
 			    			{
 			    					var left = (window.innerWidth - main_width)/2 + 7;
 								    getUserMedia(screen_constraints, function (stream) {
 								    	globalVideo = $('#my-screen-share')[0];
-								        $('#my-screen-share').hide()[0].src = URL.createObjectURL(stream);								         
+								        $('#my-screen-share').hide()[0].src = URL.createObjectURL(stream);
 									        	//Person must be currently in a chat..
 									        	$('#my-video').hide();
 												$('#screen-share').addClass('remote-video-right').css({
@@ -110,8 +110,8 @@ $(window).load(function(){
 													'width': 190,
 													'left': left,
 													'top': 8
-													});									        	
-									        	
+													});
+
 									        	$('#my-screen-share').css({'position': 'relative','height': 'auto', 'width': 190, 'z-index': 0}).parent().appendTo('#remote-video');
 										        	$('#my-screen-share').show().removeClass('animated fadeInLeft').addClass('animated fadeInLeft');
 										        	$('#my-screen-share')[0].play();
@@ -133,8 +133,8 @@ $(window).load(function(){
 										        		socket.screenStream = undefined;
 										        		resetLocalShareScreenDiv();
 							        				}
-										      
-									        
+
+
 								    }, function (error) {
 								        console.error(error);
 								    });
@@ -144,7 +144,7 @@ $(window).load(function(){
 							  {
 							  		console.log('ERROR is '+err);
 							  }
-				   	
+
 						});
 
 			}
