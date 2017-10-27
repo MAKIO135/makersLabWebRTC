@@ -1,10 +1,11 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
-/*    key: fs.readFileSync('fake-keys/privatekey.pem'),
+var options = {
+    key: fs.readFileSync('fake-keys/privatekey.pem'),
     cert: fs.readFileSync('fake-keys/certificate.pem')
-};*/
-var server = require('https').createServer(options, app);
+};
+//var server = require('https').createServer(options, app);
 var io = require('socket.io').listen(server);
 var util = require('util');
 var now = require("performance-now");
