@@ -2,7 +2,7 @@ document.addEventListener('webkitfullscreenchange', changeToolbar, true);
 document.addEventListener('mozfullscreenchange', changeToolbar, true);
 document.addEventListener('fullscreenchange', changeToolbar, true);
 document.addEventListener('MSFullscreenChange', changeToolbar, true);
-var socket = io.connect();
+var socket;
 var localStream,
     localPeerConnection,
     remotePeerConnection,
@@ -115,16 +115,15 @@ $(window).load(function() {
     video.css({'width': width, 'height': heightmain, 'left': left, 'bottom': 0});
     resizeUserPrompt();
     // takeUserInput();
+
+    socket = io.connect();
     socket.on('connected', function(e) {
         socket.username = 'Visitor' + Math.floor(Math.random()*1e4);
         socket.emit('username', socket.username);
 
         getUser();
     });
-    var constraints = {
-        video: true,
-        audio: true
-    };
+
     socket.on('available-for-offer', function() {
         console.log('Creating Offer!!!');
         createOffer(localStream);
@@ -245,6 +244,11 @@ $(window).load(function() {
 
     function getUser() {
         console.log('getUserMedia');
+
+        var constraints = {
+            video: true,
+            audio: true
+        };
         navigator.getUserMedia(constraints, success, failure);
         //$('#toolbar').show();
         //elem.src = 'videos/sintel.webm';
