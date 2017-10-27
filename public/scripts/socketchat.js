@@ -244,6 +244,7 @@ $(window).load(function() {
     }
 
     function getUser() {
+        console.log('getUserMedia');
         navigator.getUserMedia(constraints, success, failure);
         //$('#toolbar').show();
         //elem.src = 'videos/sintel.webm';
@@ -257,34 +258,34 @@ $(window).load(function() {
         userPrompt.addClass('fadeInDownBig');
     }
 
-    function takeUserInput() {
-        var userPrompt = $('#username-prompt');
-        userPrompt.find('form').submit(function(e) {
-            e.preventDefault();
-            var input = $.trim($(this).find('input').eq(0).val());
-            if (input === '') {
-                userPrompt.find('#errors').removeClass().addClass('wrong').text('You cannot leave it blank.');
-            } else {
-                var patt = new RegExp("[^A-Za-z0-9 ]");
-                var res = patt.test(input);
-                if (!res) {
-                    userPrompt.find('#errors').removeClass().addClass('correct').text('Thank You.');
-                    setTimeout(function() {
-                        userPrompt.removeClass('fadeInDownBig').addClass('fadeOutUpBig');
-                        setTimeout(function() {
-                            userPrompt.hide();
-                        }, 1000);
-                        getUser();
-                    }, 1000);
-                    $('#first-speaker').html(input);
-                    socket.username = input;
-                    socket.emit('username', input);
-                } else {
-                    userPrompt.find('#errors').removeClass().addClass('wrong').text('No special characters !');
-                }
-            }
-        });
-    }
+    // function takeUserInput() {
+    //     var userPrompt = $('#username-prompt');
+    //     userPrompt.find('form').submit(function(e) {
+    //         e.preventDefault();
+    //         var input = $.trim($(this).find('input').eq(0).val());
+    //         if (input === '') {
+    //             userPrompt.find('#errors').removeClass().addClass('wrong').text('You cannot leave it blank.');
+    //         } else {
+    //             var patt = new RegExp("[^A-Za-z0-9 ]");
+    //             var res = patt.test(input);
+    //             if (!res) {
+    //                 userPrompt.find('#errors').removeClass().addClass('correct').text('Thank You.');
+    //                 setTimeout(function() {
+    //                     userPrompt.removeClass('fadeInDownBig').addClass('fadeOutUpBig');
+    //                     setTimeout(function() {
+    //                         userPrompt.hide();
+    //                     }, 1000);
+    //                     getUser();
+    //                 }, 1000);
+    //                 $('#first-speaker').html(input);
+    //                 socket.username = input;
+    //                 socket.emit('username', input);
+    //             } else {
+    //                 userPrompt.find('#errors').removeClass().addClass('wrong').text('No special characters !');
+    //             }
+    //         }
+    //     });
+    // }
 });
 
 function addRemoteVideo(top, height, stream) {
