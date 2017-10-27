@@ -14,6 +14,7 @@ var users = {};
 var screensharingusers = {};
 var socketio;
 var trimmed;
+
 server.listen(process.env.PORT || 5000);
 console.log('App started at port' + (process.env.PORT||5000) );
 app.use(express.static(__dirname + '/public'));
@@ -23,21 +24,19 @@ app.get('/',function(req,res){
 app.get('/:key',function(req,res){
 		res.sendfile(__dirname+'/public/public.html');
 });
+
 io.sockets.on('connection',function(socket){
 	console.log(now()+' connected..');
 	socket.key = trimmed;
 	socket.screenShared = false;
 	socket.on('disconnect',function(){
-		if(socket.username === undefined)
-		{
+		if(socket.username === undefined) {
 			console.log('User has disconnected!! without using the product!!');
 		}
-		else
-		{
+		else {
 			console.log(socket.username + ' has disconnected!!');
 			socket.broadcast.to(socket.key).emit('disconnected-user-reset');
-				if(rooms.length > 0)
-			{
+			if(rooms.length > 0) {
 				console.log('Calling removeUserKey..');
 				removeUserKey(socket);
 				io.to(socket.key).emit('checking-for-screen-share', socket.key, users[socket.key]);
@@ -53,15 +52,12 @@ io.sockets.on('connection',function(socket){
 	socket.on('checked-stream',function(data){
 		console.log('Inside checked stream!!..Now emitting checking-for-screen-share !!!');
 		io.to(socket.key).emit('checking-for-screen-share', socket.key, users[socket.key]);
-		if(users[socket.key].length===2)
-		{
+		if(users[socket.key].length===2) {
 			socket.broadcast.to(socket.key).emit('available-for-offer');
 			io.to(socket.key).emit('users-final', users[socket.key]);
 		}
-		else
-		{
-			if(users[socket.key].length>2)
-			{
+		else {
+			if(users[socket.key].length>2) {
 				console.log("Sorry..This room is already in use..Try again later.");
 			}
 		}
@@ -116,79 +112,79 @@ io.sockets.on('connection',function(socket){
 	});
 });
 //FUNCTIONS----start
-	function addUserKey(data,socket)
+function addUserKey(data,socket)
+{
+	try
 	{
-		try
+			var key = socket.key;
+			if(rooms.indexOf(key) === -1)
 		{
-				var key = socket.key;
-				if(rooms.indexOf(key) === -1)
+			console.log('Generating new key!!');
+			rooms.push(key);
+			users[key]=[data];
+			screensharingusers[key] = {};
+			screensharingusers[key][data] = socket.screenShared;
+			socket.users = {} ;
+			socket.users[data] = key;
+			socket.username= data;
+			socket.join(socket.key);
+			console.log('Socket joins a room.');
+			console.log('Adding socket.username --->'+ socket.username);
+			console.log('Adding socket.users[data] --->'+socket.users[data]);
+			console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
+		}
+		else
+		{
+			if(users[key]!=undefined)
 			{
-				console.log('Generating new key!!');
-				rooms.push(key);
-				users[key]=[data];
-				screensharingusers[key] = {};
+
+				console.log(now()+' Room already exists!!!');
+				users[key].push(data);
 				screensharingusers[key][data] = socket.screenShared;
-				socket.users = {} ;
+				console.log('Now rooms array is '+JSON.stringify(rooms));
+				console.log('Now users array is '+JSON.stringify(users));
+				socket.users = {};
 				socket.users[data] = key;
 				socket.username= data;
 				socket.join(socket.key);
-				console.log('Socket joins a room.');
-				console.log('Adding socket.username --->'+ socket.username);
-				console.log('Adding socket.users[data] --->'+socket.users[data]);
 				console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 			}
-			else
-			{
-				if(users[key]!=undefined)
-				{
 
-					console.log(now()+' Room already exists!!!');
-					users[key].push(data);
-					screensharingusers[key][data] = socket.screenShared;
-					console.log('Now rooms array is '+JSON.stringify(rooms));
-					console.log('Now users array is '+JSON.stringify(users));
-					socket.users = {};
-					socket.users[data] = key;
-					socket.username= data;
-					socket.join(socket.key);
-					console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
-				}
-
-			}
 		}
-		catch(err)
-		{
-			console.log('Thrown error is ->'+err);
-		}
-
 	}
-
-	function removeUserKey(socket)
+	catch(err)
 	{
-		try
-		{
-			var username = socket.username;
-			var key = socket.users[socket.username];
-			console.log('Deleting inside removeUserKey() function...');
-			users[socket.key].splice(users[socket.key].indexOf(username),1);
-			delete screensharingusers[socket.key][username];
-				if(users[socket.key].length === 0)
-				{
-					delete users[socket.key];
-					rooms.splice(rooms.indexOf(username),1);
-					delete screensharingusers[socket.key];
-				}
-			console.log('Now rooms array is '+util.inspect(rooms));
-			console.log('Now users array is '+util.inspect(users));
-			console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
-		}
-
-		catch(err)
-		{
-			console.log('Thrown error is ->'+err);
-		}
-
-
+		console.log('Thrown error is ->'+err);
 	}
+
+}
+
+function removeUserKey(socket)
+{
+	try
+	{
+		var username = socket.username;
+		var key = socket.users[socket.username];
+		console.log('Deleting inside removeUserKey() function...');
+		users[socket.key].splice(users[socket.key].indexOf(username),1);
+		delete screensharingusers[socket.key][username];
+			if(users[socket.key].length === 0)
+			{
+				delete users[socket.key];
+				rooms.splice(rooms.indexOf(username),1);
+				delete screensharingusers[socket.key];
+			}
+		console.log('Now rooms array is '+util.inspect(rooms));
+		console.log('Now users array is '+util.inspect(users));
+		console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
+	}
+
+	catch(err)
+	{
+		console.log('Thrown error is ->'+err);
+	}
+
+
+}
 
 //FUNCTIONS----end
