@@ -296,17 +296,17 @@ function addRemoteVideo(top, height, stream) {
     if (!socket.screenSharedByRemote && !socket.screenShared) {
         console.log('INSIDE addRemoteVideo...width is ' + main_width);
         var left = (window.innerWidth - main_width) / 2 + 7;
-        // $('#remote-video').append($('#my-video'));
+        $('#remote-video').append($('#my-video'));
         $('#remote-video').find('video').eq(0).addClass('remote-video-right').css({'position': 'absolute', 'height': 150, 'width': 190, 'left': left}).hide();
-        // $('#local-video').prepend('<video autoplay style="width: ' + main_width + '"></video>');
+        $('#local-video').prepend('<video autoplay style="width: ' + main_width + '"></video>');
         $('#local-video').find('video')[0].src = stream;
         $('#remote-video').find('video')[0].play();
         globalVideo = $('#local-video').find('video')[0];
-        // setTimeout(function() {
+        setTimeout(function() {
             removeBlackOverlay();
-            // enableTextarea();
+            enableTextarea();
             $('#remote-video').find('video').eq(0).show(); //.addClass('animated fadeInLeft');
-        // }, 2000);
+        }, 2000);
     } else if (socket.screenSharedByRemote) {
         //Other guy must have shared the screen..
         console.log('NOW SHOWING OTHER PERSONS SCREEN AS HE HAS SHARED IT');
