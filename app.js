@@ -17,11 +17,13 @@ app.get('/',function(req,res){
 	res.sendfile(__dirname+'/public/404.html');
 });
 app.get('/:key',function(req,res){
-		res.sendfile(__dirname+'/public/public.html');
+	trimmed = req.params.key.trim();
+	res.sendfile(__dirname+'/public/public.html');
 });
 
 io.sockets.on('connection',function(socket){
 	console.log(now()+' connected..');
+    socket.on()
 	socket.key = trimmed;
 	socket.screenShared = false;
 	socket.on('disconnect',function(){
@@ -107,13 +109,10 @@ io.sockets.on('connection',function(socket){
 	});
 });
 //FUNCTIONS----start
-function addUserKey(data,socket)
-{
-	try
-	{
-			var key = socket.key;
-			if(rooms.indexOf(key) === -1)
-		{
+function addUserKey(data,socket){
+	try{
+		var key = socket.key;
+		if(rooms.indexOf(key) === -1){
 			console.log('Generating new key!!');
 			rooms.push(key);
 			users[key]=[data];
@@ -128,11 +127,9 @@ function addUserKey(data,socket)
 			console.log('Adding socket.users[data] --->'+socket.users[data]);
 			console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 		}
-		else
-		{
+		else{
 			if(users[key]!=undefined)
 			{
-
 				console.log(now()+' Room already exists!!!');
 				users[key].push(data);
 				screensharingusers[key][data] = socket.screenShared;
@@ -144,11 +141,9 @@ function addUserKey(data,socket)
 				socket.join(socket.key);
 				console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 			}
-
 		}
 	}
-	catch(err)
-	{
+	catch(err){
 		console.log('Thrown error is ->'+err);
 	}
 
