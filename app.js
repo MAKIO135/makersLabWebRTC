@@ -1,10 +1,10 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
-var server = require('http').Server(app);// createServer(options, app);
+var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 var util = require('util');
-var now = require("performance-now");
+var now = require('performance-now');
 var rooms = [];
 var users = {};
 var screensharingusers = {};
@@ -54,7 +54,7 @@ io.sockets.on('connection',function(socket){
 		}
 		else {
 			if(users[socket.key].length>2) {
-				console.log("Sorry..This room is already in use..Try again later.");
+				console.log('Sorry..This room is already in use..Try again later.');
 			}
 		}
 	});
