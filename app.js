@@ -1,10 +1,6 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
-var options = {
-    key: fs.readFileSync('fake-keys/privatekey.pem'),
-    cert: fs.readFileSync('fake-keys/certificate.pem')
-};
 var server = require('http').Server(app);// createServer(options, app);
 var io = require('socket.io').listen(server);
 var util = require('util');
