@@ -23,6 +23,7 @@ app.get('/:key',function(req,res){
 
 io.sockets.on('connection',function(socket){
 	console.log(now()+' connected..');
+    socket.on()
 	socket.key = trimmed;
 	socket.screenShared = false;
 	socket.on('disconnect',function(){
