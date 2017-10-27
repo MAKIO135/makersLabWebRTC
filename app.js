@@ -21,18 +21,7 @@ app.get('/',function(req,res){
 	res.sendfile(__dirname+'/public/404.html');
 });
 app.get('/:key',function(req,res){
-	trimmed = req.params.key.trim();
-	if (req.url === '/favicon.ico')
-	{
-	    res.writeHead(200, {'Content-Type': 'image/x-icon'} );
-	    res.end();
-	    return;
-  	}
-	else
-	{
 		res.sendfile(__dirname+'/public/public.html');
-	}
-
 });
 io.sockets.on('connection',function(socket){
 	console.log(now()+' connected..');
