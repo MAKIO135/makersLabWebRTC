@@ -296,17 +296,17 @@ function addRemoteVideo(top, height, stream) {
     if (!socket.screenSharedByRemote && !socket.screenShared) {
         console.log('INSIDE addRemoteVideo...width is ' + main_width);
         var left = (window.innerWidth - main_width) / 2 + 7;
-        $('#remote-video').append($('#my-video'));
+        // $('#remote-video').append($('#my-video'));
         $('#remote-video').find('video').eq(0).addClass('remote-video-right').css({'position': 'absolute', 'height': 150, 'width': 190, 'left': left}).hide();
-        $('#local-video').prepend('<video autoplay style="width: ' + main_width + '"></video>');
+        // $('#local-video').prepend('<video autoplay style="width: ' + main_width + '"></video>');
         $('#local-video').find('video')[0].src = stream;
         $('#remote-video').find('video')[0].play();
         globalVideo = $('#local-video').find('video')[0];
-        setTimeout(function() {
+        // setTimeout(function() {
             removeBlackOverlay();
-            enableTextarea();
+            // enableTextarea();
             $('#remote-video').find('video').eq(0).show(); //.addClass('animated fadeInLeft');
-        }, 2000);
+        // }, 2000);
     } else if (socket.screenSharedByRemote) {
         //Other guy must have shared the screen..
         console.log('NOW SHOWING OTHER PERSONS SCREEN AS HE HAS SHARED IT');
@@ -330,11 +330,10 @@ function addRemoteVideo(top, height, stream) {
 
         setTimeout(function() {
             removeBlackOverlay();
-            enableTextarea();
+            // enableTextarea();
             $('#my-screen-share').show().addClass('animated fadeInLeft');
         }, 2000);
     }
-
 }
 
 function removeRemoteVideo() {
@@ -348,7 +347,7 @@ function removeRemoteVideo() {
         globalStream = localStream;
         console.log('FUNCTION ENDED !!!!');
         REMOTE_VIDEO_ON = false;
-        disableTextarea();
+        // disableTextarea();
     } else {
         //Screen must be shared by the user..
         $('#local-video').find('video').remove();
@@ -369,7 +368,7 @@ function removeRemoteVideo() {
         }).prependTo('#local-video');
         $('#my-screen-share').show().addClass('animated fadeInLeft');
         $('#my-screen-share')[0].play();
-        disableTextarea();
+        // disableTextarea();
         globalVideo = $('#my-screen-share')[0];
         //NOW doing the first if condition things...
         $('#local-video').prepend($('#remote-video').find('video').eq(0).removeClass('remote-video-right').css({'position': 'absolute', 'height': 'auto', 'width': main_width, 'left': 0}));
@@ -607,17 +606,17 @@ function exitFullscreen() {
     }
 }
 
-function enableTextarea() {
-    //$('#second-section-form textarea')[0].placeholder = "Enter text to chat"
-    //$('#second-section-form textarea')[0].disabled = false;
-    $('#fileupload').css('display', 'block');
-}
+// function enableTextarea() {
+//     //$('#second-section-form textarea')[0].placeholder = "Enter text to chat"
+//     //$('#second-section-form textarea')[0].disabled = false;
+//     $('#fileupload').css('display', 'block');
+// }
 
-function disableTextarea() {
-    //$('#second-section-form textarea')[0].placeholder = "Waiting for the other user"
-    //$('#second-section-form textarea')[0].disabled = true;
-    $('#fileupload').css('display', 'none');
-}
+// function disableTextarea() {
+//     //$('#second-section-form textarea')[0].placeholder = "Waiting for the other user"
+//     //$('#second-section-form textarea')[0].disabled = true;
+//     $('#fileupload').css('display', 'none');
+// }
 //CHAT FUNCTIONALITY ---ENDS
 
 //CHECKING IF SCREEN
