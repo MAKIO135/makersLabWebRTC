@@ -14,8 +14,8 @@ var users = {};
 var screensharingusers = {};
 var socketio;
 var trimmed;
-server.listen(5000);
-console.log('App started at port...5000');
+//server.listen(5000);
+//console.log('App started at port...5000');
 app.use(express.static(__dirname + '/public'));
 app.get('/',function(req,res){
 	res.sendfile(__dirname+'/public/404.html');
@@ -32,7 +32,7 @@ app.get('/:key',function(req,res){
 	{
 		res.sendfile(__dirname+'/public/public.html');
 	}
-	
+
 });
 io.sockets.on('connection',function(socket){
 	console.log(now()+' connected..');
@@ -51,7 +51,7 @@ io.sockets.on('connection',function(socket){
 			{
 				console.log('Calling removeUserKey..');
 				removeUserKey(socket);
-				io.to(socket.key).emit('checking-for-screen-share', socket.key, users[socket.key]);	
+				io.to(socket.key).emit('checking-for-screen-share', socket.key, users[socket.key]);
 			}
 		}
 	});
@@ -91,8 +91,8 @@ io.sockets.on('connection',function(socket){
 	});
 	socket.on('local-candidate',function(data){
 		console.log('Got Local Candidate!!!');
-		socket.broadcast.to(socket.key).emit('local-candidate-broadcast',data);	
-	
+		socket.broadcast.to(socket.key).emit('local-candidate-broadcast',data);
+
 	});
 	socket.on('remote-candidate',function(data){
 		console.log('Got Remote Candidate!!!');
@@ -114,7 +114,7 @@ io.sockets.on('connection',function(socket){
 		socket.screenShared = false;
 		console.log('OFF CALLED..Screen shared is '+ socket.screenShared);
 		screensharingusers[socket.key][socket.username] = socket.screenShared;
-		console.log('Now screensharingusers object is '+util.inspect(screensharingusers));	
+		console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 		socket.broadcast.to(socket.key).emit('other-guy-screen-share-off');
 	});
 
@@ -122,7 +122,7 @@ io.sockets.on('connection',function(socket){
 		socket.screenShared = true;
 		console.log('ON CALLED..Screen shared is '+ socket.screenShared);
 		screensharingusers[socket.key][socket.username] = socket.screenShared;
-		console.log('Now screensharingusers object is '+util.inspect(screensharingusers));	
+		console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 		socket.broadcast.to(socket.key).emit('other-guy-screen-share-on');
 	});
 });
@@ -146,7 +146,7 @@ io.sockets.on('connection',function(socket){
 				console.log('Socket joins a room.');
 				console.log('Adding socket.username --->'+ socket.username);
 				console.log('Adding socket.users[data] --->'+socket.users[data]);
-				console.log('Now screensharingusers object is '+util.inspect(screensharingusers));	
+				console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 			}
 			else
 			{
@@ -162,7 +162,7 @@ io.sockets.on('connection',function(socket){
 					socket.users[data] = key;
 					socket.username= data;
 					socket.join(socket.key);
-					console.log('Now screensharingusers object is '+util.inspect(screensharingusers));		
+					console.log('Now screensharingusers object is '+util.inspect(screensharingusers));
 				}
 
 			}
@@ -175,7 +175,7 @@ io.sockets.on('connection',function(socket){
 	}
 
 	function removeUserKey(socket)
-	{		
+	{
 		try
 		{
 			var username = socket.username;
@@ -198,9 +198,8 @@ io.sockets.on('connection',function(socket){
 		{
 			console.log('Thrown error is ->'+err);
 		}
-			
+
 
 	}
 
 //FUNCTIONS----end
-
